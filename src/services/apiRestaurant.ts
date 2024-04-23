@@ -1,4 +1,4 @@
-import { Order, Pizza } from '../utils/types';
+import { CompleteOrder, CreateOrder, Pizza } from '../utils/types';
 
 const API_URL: string = 'https://react-fast-pizza-api.onrender.com/api';
 
@@ -20,7 +20,9 @@ export async function getOrder(id: string | number): Promise<Pizza> {
   return data;
 }
 
-export async function createOrder(newOrder: Order) {
+export async function createOrder(
+  newOrder: CreateOrder
+): Promise<CompleteOrder> {
   try {
     const res = await fetch(`${API_URL}/order`, {
       method: 'POST',

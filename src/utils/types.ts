@@ -15,7 +15,15 @@ export type Pizza = {
   imageUrl: string;
 };
 
-export type Order = {
+export type CreateOrder = {
+  customer: string;
+  phone: string;
+  address: string;
+  priority: boolean;
+  cart: Cart;
+};
+
+export type CompleteOrder = {
   id: string;
   customer: string;
   phone: string;

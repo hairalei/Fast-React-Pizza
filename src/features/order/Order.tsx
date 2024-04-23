@@ -7,10 +7,10 @@ import {
   formatCurrency,
   formatDate,
 } from '../../utils/helpers';
-import { type Order, Pizza } from '../../utils/types';
+import { type CompleteOrder, Pizza } from '../../utils/types';
 
 function Order() {
-  const order = useLoaderData() as Order;
+  const order = useLoaderData() as CompleteOrder;
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const {
     id,
@@ -29,7 +29,7 @@ function Order() {
         <h2>Status</h2>
 
         <div>
-          {priority && <span>Priority</span>}
+          {priority && <span>Priority </span>}
           <span>{status} order</span>
         </div>
       </div>
