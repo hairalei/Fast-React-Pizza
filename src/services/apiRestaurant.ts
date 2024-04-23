@@ -1,6 +1,6 @@
 import { Order, Pizza } from '../utils/types';
 
-const API_URL: string = 'https://react-fast-pizza-api.onrender.com/apif';
+const API_URL: string = 'https://react-fast-pizza-api.onrender.com/api';
 
 export async function getMenu(): Promise<Pizza[]> {
   const res = await fetch(`${API_URL}/menu`);
@@ -12,7 +12,7 @@ export async function getMenu(): Promise<Pizza[]> {
   return data;
 }
 
-export async function getOrder(id: string | number) {
+export async function getOrder(id: string | number): Promise<Pizza> {
   const res = await fetch(`${API_URL}/order/${id}`);
   if (!res.ok) throw Error(`Couldn't find order #${id}`);
 
