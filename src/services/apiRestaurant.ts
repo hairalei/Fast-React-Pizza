@@ -1,8 +1,8 @@
-import { Order } from '../utils/types';
+import { Order, Pizza } from '../utils/types';
 
-const API_URL: string = 'https://react-fast-pizza-api.onrender.com/api';
+const API_URL: string = 'https://react-fast-pizza-api.onrender.com/apif';
 
-export async function getMenu() {
+export async function getMenu(): Promise<Pizza[]> {
   const res = await fetch(`${API_URL}/menu`);
 
   // fetch won't throw error on 400 errors (e.g. when URL is wrong), so we need to do it manually. This will then go into the catch block, where the message is set
