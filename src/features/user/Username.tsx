@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { type RootState } from '../../store';
+import { selectUsername } from './userSelectors';
 
 function Username() {
-  const username = useSelector((state: RootState) => state.user.username);
+  const username = useSelector(selectUsername);
 
   if (!username) return;
 
