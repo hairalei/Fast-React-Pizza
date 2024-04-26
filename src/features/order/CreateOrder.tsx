@@ -3,7 +3,7 @@ import { type CreateOrder } from '../../utils/types';
 import { createOrder } from '../../services/apiRestaurant';
 import Button from '../../ui/Button';
 import { useSelector } from 'react-redux';
-import { selectUsername } from '../user/userSelectors';
+import { getUsername } from '../user/userSelectors';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
@@ -36,7 +36,7 @@ const fakeCart = [
 ];
 
 function CreateOrder() {
-  const username = useSelector(selectUsername);
+  const username = useSelector(getUsername);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 

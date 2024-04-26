@@ -2,57 +2,47 @@ import { type Cart } from '../../utils/types';
 import LinkButton from '../../ui/LinkButton';
 import Button from '../../ui/Button';
 import CartItem from './CartItem';
-import { useSelector } from 'react-redux';
-import { selectUsername } from '../user/userSelectors';
-
-const fakeCart: Cart[] = [
-  {
-    pizzaId: 12,
-    name: 'Mediterranean',
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: 'Vegetale',
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: 'Spinach and Mushroom',
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsername } from '../user/userSelectors';
+import { getCart } from './cartSelector';
+import { clearCart } from './cartSlice';
 
 function Cart() {
-  const username = useSelector(selectUsername);
-  const cart = fakeCart;
-  console.log(cart);
+  const dispatch = useDispatch();
+  const username = useSelector(getUsername);
+  const cart = useSelector(getCart);
+
+  function handleClearCart() {
+    dispatch(clearCart());
+  }
 
   return (
     <div className='px-4 py-3'>
       <LinkButton to='/menu'>&larr; Back to menu</LinkButton>
 
-      <h2 className='text-xl font-semibold mt-7'>Your cart, {username}</h2>
+      <h2 className='text-xl font-semibold mt-7'>
+        {cart.length === 0 ? 'Your cart is empty' : `Your cart, ${username}`}
+      </h2>
 
-      <ul className='mt-3 border-b divide-y divide-stone-200'>
-        {cart.map((item) => (
-          <CartItem key={item.pizzaId} item={item} />
-        ))}
-      </ul>
+      {cart.length > 0 && (
+        <>
+          <ul className='mt-3 border-b divide-y divide-stone-200'>
+            {cart.map((item) => (
+              <CartItem key={item.pizzaId} item={item} />
+            ))}
+          </ul>
 
-      <div className='mt-6 space-x-2'>
-        <Button type='primary' to='/order/new'>
-          Order pizzas
-        </Button>
+          <div className='mt-6 space-x-2'>
+            <Button type='primary' to='/order/new'>
+              Order pizzas
+            </Button>
 
-        <Button type='secondary'>Clear cart</Button>
-      </div>
+            <Button type='secondary' onClick={handleClearCart}>
+              Clear cart
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
