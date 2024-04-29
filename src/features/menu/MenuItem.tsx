@@ -5,6 +5,7 @@ import { Pizza } from '../../utils/types';
 import { addItem } from '../cart/cartSlice';
 import DeleteItem from '../cart/DeleteItem';
 import { getCurrentQtyById } from '../cart/cartSelector';
+import UpdateItemQty from '../cart/UpdateItemQty';
 
 function MenuItem({ pizza }: { pizza: Pizza }) {
   const dispatch = useDispatch();
@@ -43,7 +44,10 @@ function MenuItem({ pizza }: { pizza: Pizza }) {
           )}
 
           {currentQty > 0 ? (
-            <DeleteItem pizzaId={id} />
+            <div className='flex items-center gap-3 sm:gap-8'>
+              <UpdateItemQty pizzaId={id} currentQty={currentQty} />
+              <DeleteItem pizzaId={id} />
+            </div>
           ) : (
             !soldOut && (
               <Button type='small' disabled={soldOut} onClick={handleAddToCart}>
