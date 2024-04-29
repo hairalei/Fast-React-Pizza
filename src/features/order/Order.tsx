@@ -1,6 +1,6 @@
 // Test ID: IIDSAT
 
-import { LoaderFunction, useLoaderData } from 'react-router-dom';
+import { LoaderFunction, useFetcher, useLoaderData } from 'react-router-dom';
 import { getOrder } from '../../services/apiRestaurant';
 import {
   calcMinutesLeft,
@@ -9,6 +9,7 @@ import {
 } from '../../utils/helpers';
 import { type CompleteOrder, Pizza } from '../../utils/types';
 import OrderItem from './OrderItem';
+import { useEffect } from 'react';
 
 function Order() {
   const order = useLoaderData() as CompleteOrder;
@@ -23,6 +24,15 @@ function Order() {
     cart,
   } = order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
+
+  const fetcher = useFetcher();
+
+  useEffect(
+    function () {
+      if (!fetcher.data && fetcher.state === 'idle') fetcher.load('/menu');
+    },
+    [fetcher]
+  );
 
   return (
     <div className='px-4 py-6 space-y-8'>
@@ -54,7 +64,15 @@ function Order() {
 
       <ul className='my-8 border-t border-b divide-y divide-stone-200'>
         {cart.map((item) => (
-          <OrderItem item={item} key={item.pizzaId} />
+          <OrderItem
+            isLoadingIngredients={fetcher.state === 'loading'}
+            item={item}
+            key={item.pizzaId}
+            ingredients={
+              fetcher?.data?.find((el: Pizza) => el.id === item.pizzaId)
+                .ingredients ?? []
+            }
+          />
         ))}
       </ul>
 
