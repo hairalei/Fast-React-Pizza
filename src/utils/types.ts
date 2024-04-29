@@ -19,7 +19,7 @@ export type CreateOrder = {
   customer: string;
   phone: string;
   address: string;
-  priority: boolean;
+  priority: boolean | string;
   cart: Cart;
 };
 
@@ -28,7 +28,7 @@ export type CompleteOrder = {
   customer: string;
   phone: string;
   address: string;
-  priority: boolean;
+  priority: boolean | string;
   estimatedDelivery: string;
   cart: Cart[];
   position: string;
