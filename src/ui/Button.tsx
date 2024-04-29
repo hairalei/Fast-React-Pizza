@@ -6,7 +6,9 @@ type ButtonType = {
   disabled?: boolean;
   to?: string;
   type: 'primary' | 'secondary' | 'small' | 'round';
-  onClick?: () => void;
+  onClick?:
+    | (() => void)
+    | ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
 };
 
 function Button({ children, disabled, to, type, onClick }: ButtonType) {
